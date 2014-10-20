@@ -1,7 +1,7 @@
 {
     "name": "bbc-r1-tracklist-scrape",
     "description": "Scrape track listing data from BBC Radio 1 radio show podcast site",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "private": false,
     "main": "app.js",
     "repository": {
