@@ -3,7 +3,7 @@ var cheerio = require("cheerio");
 
 // Scrape tracks from a file
 exports.scrapeFromFile = function(filename, encoding, callback) {
-    fs.readFile('tracklist.htm', 'utf8', function (err,data) {
+    fs.readFile(filename, encoding, function (err,data) {
         // Abort in case of IO error
         if (err) {
             console.log(err);
