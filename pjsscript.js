@@ -1,7 +1,11 @@
+var system = require('system');
+var args = system.args;
+var url = args[1];
+
 var page = require('webpage').create();
 
 page.settings.resourceTimeout = 10000;
-page.open('http://www.bbc.co.uk/programmes/b04p24h0', function(status) {
+page.open(url, function(status) {
     if (status !== 'success') {
         console.log('Unable to access network');
     } else {

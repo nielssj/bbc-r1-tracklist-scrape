@@ -39,7 +39,7 @@ exports.scrapeFromFile = function(filename, encoding, callback) {
 
 // Make HTTP request, evaluate page (PhantomJS) and invoke scrape function using html content
 exports.scrapeFromUrl = function(url, callback) {
-    childProcess.execFile(phantomjs.path, ["pjsscript.js"], function (err, stdout, stderr) {
+    childProcess.execFile(phantomjs.path, ["pjsscript.js", url], function (err, stdout, stderr) {
         if(!err) {
             scrapeList(stdout, callback);
         } else {
