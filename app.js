@@ -3,6 +3,7 @@ var childProcess = require("child_process");
 var phantomjs = require("phantomjs");
 var cheerio = require("cheerio");
 
+// Scrape HTML mark-up for track listing and invoke callback with JSON-array of tracks.
 var scrapeList = function(data, callback) {
     // Parse HTML into Cheerio
     var $ = cheerio.load(data);
@@ -21,16 +22,15 @@ var scrapeList = function(data, callback) {
     });
 
     // Return full track list through callback
-    console.log(tracks);
     callback(tracks);
 };
 
-// Scrape tracks from a file
+// Read file content and invoke scrape function using content
 exports.scrapeFromFile = function(filename, encoding, callback) {
     fs.readFile(filename, encoding, function (err,data) {
         // Abort in case of IO error
         if (err) {
-            console.log(err);
+            console.log("Failed due to read file, scrape aborted");
             callback(null, err);
             return;
         }
@@ -39,12 +39,13 @@ exports.scrapeFromFile = function(filename, encoding, callback) {
     });
 };
 
+// Make HTTP request, evaluate page (PhantomJS) and invoke scrape function using html content
 exports.scrapeFromUrl = function(url, callback) {
     childProcess.execFile(phantomjs.path, ["pjsscript.js"], function (err, stdout, stderr) {
         if(!stderr) {
             scrapeList(stdout, callback);
         } else {
-            console.log("Failed to retrieve web page: " + stderr);
+            console.log("Failed to retrieve web page, scrape aborted");
             callback(null, stderr)
         }
     })
