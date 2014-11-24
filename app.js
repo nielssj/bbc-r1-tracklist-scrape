@@ -9,10 +9,10 @@ var scrapeList = function(data, callback) {
     var $ = cheerio.load(data);
 
     // Scrape track information
-    tracks = [];
+    var tracks = [];
     var tracksSelect = $(".segment__track");
     tracksSelect.each(function (i, elem) {
-        track = {
+        var track = {
             artist: $(this).find("span .artist").html(),
             title: $(this).find("p[property=name]").html(),
             contributors: $(this).find("span[property=contributor] span").html(),
@@ -28,25 +28,23 @@ var scrapeList = function(data, callback) {
 // Read file content and invoke scrape function using content
 exports.scrapeFromFile = function(filename, encoding, callback) {
     fs.readFile(filename, encoding, function (err,data) {
-        // Abort in case of IO error
-        if (err) {
+        if(!err) {
+            scrapeList(data, callback);
+        } else {
             console.log("Failed due to read file, scrape aborted");
             callback(null, err);
-            return;
         }
-
-        scrapeList(data, callback);
     });
 };
 
 // Make HTTP request, evaluate page (PhantomJS) and invoke scrape function using html content
 exports.scrapeFromUrl = function(url, callback) {
     childProcess.execFile(phantomjs.path, ["pjsscript.js"], function (err, stdout, stderr) {
-        if(!stderr) {
+        if(!err) {
             scrapeList(stdout, callback);
         } else {
             console.log("Failed to retrieve web page, scrape aborted");
-            callback(null, stderr)
+            callback(null, err)
         }
     })
 };
