@@ -1,14 +1,15 @@
 {
-    "name": "bbc-r1-tracklist-scrape",
-    "description": "Scrape track listing data from BBC Radio 1 radio show podcast site",
-    "version": "0.0.2",
-    "private": false,
-    "main": "app.js",
-    "repository": {
-        "type": "git",
-        "url": "git@github.com:nielssj/bbc-r1-tracklist-scrape.git"
-    },
-    "dependencies": {
-        "cheerio": "0.17.0"
-    }
+  "name": "bbc-r1-tracklist-scrape",
+  "description": "Scrape track listing data from BBC Radio 1 radio show podcast site",
+  "version": "0.0.2",
+  "private": false,
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nielssj/bbc-r1-tracklist-scrape.git"
+  },
+  "dependencies": {
+    "cheerio": "0.17.0",
+    "phantomjs": "~1.9.12"
+  }
 }

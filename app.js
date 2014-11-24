@@ -1,4 +1,6 @@
 var fs = require("fs");
+var childProcess = require("child_process");
+var phantomjs = require("phantomjs");
 var cheerio = require("cheerio");
 
 var scrapeList = function(data, callback) {
@@ -35,4 +37,15 @@ exports.scrapeFromFile = function(filename, encoding, callback) {
 
         scrapeList(data, callback);
     });
+};
+
+exports.scrapeFromUrl = function(url, callback) {
+    childProcess.execFile(phantomjs.path, ["pjsscript.js"], function (err, stdout, stderr) {
+        if(!stderr) {
+            scrapeList(stdout, callback);
+        } else {
+            console.log("Failed to retrieve web page: " + stderr);
+            callback(null, stderr)
+        }
+    })
 };
